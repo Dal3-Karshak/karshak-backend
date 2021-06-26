@@ -8,15 +8,16 @@ foodFunctions.getFood = (req,res) => {
     const KEY = process.env.FOOD_KEY;
      let foodName = req.query.foodName;
      let cuisine = req.query.cuisine;
-
+    console.log(req.query);
+    console.log()
      let Url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${KEY}&query=${foodName}&number=${12}&cuisine=${cuisine}`;
 
     axios.get(Url)
     .then(result =>{
-        console.log(result.data.results)
+        console.log(result.data)
         res.status(200).send(result.data)
     }).catch(err =>{
-        res.status(400).send("Bad Request" , err)
+        res.status(404).send("Bad Request" , err)
     })
 }
 
