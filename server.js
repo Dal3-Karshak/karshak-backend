@@ -11,7 +11,6 @@ const foodRoutes = require('./routes/food.js')
 // config
 const app = express();
 const PORT = process.env.PORT;
-console.log(process.env.PORT)
 
 // middle wares 
 app.use(cors());
@@ -34,8 +33,8 @@ app.all("*", (req, res) =>res.status(400).send("You've tried reaching a route th
 // 🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 CODE 🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆
 // seed data 
 function seed() {
-  const saadoun = new foodModel ({
-        email: 'saadoundhirat93@gmail.com',
+  const ali = new foodModel ({
+        email: 'alinnnnnn@gmail.com',
         food:[
             {   
               id: 12345,
@@ -62,7 +61,7 @@ function seed() {
         ]
 
   });
-   saadoun.save();
+   ali.save();
 }
 
 // seed();

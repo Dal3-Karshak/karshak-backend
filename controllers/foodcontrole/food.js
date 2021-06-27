@@ -1,12 +1,41 @@
-const { default: axios } = require("axios");
+const axios = require("axios");
 
 const foodFunctions = {};
 const foodModel = require('../../models/foodschema.js')
-console.log(foodModel);
+// console.log(foodModel);
 
+// 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤 HANDLE USERS 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤
+//http://localhost:8000/food/handleUsers?email=< any email >
+foodFunctions.handleUsers = (req,res) => {
+    // console.log("kkkkkkkkkkkkkkk",foodModel)
+    const email = req.query.email;
+    foodModel.find({email:email} , (error,userData) =>{
+        if (error){
+            res.status(400).send('Bad Request TRY AGAIN');
+        }
+        else{
+            // console.log(userData)
+            if(userData.length === 0){
+                const newUser = new foodModel ({
+                    email: `${email}`,
+                    food:[]
+              });
+              newUser.save();
+              res.status(200).send(newUser)
+            }else{
+               
+              res.status(200).send(userData[0]) 
+            }
+        }
+    })
+}
+
+
+
+
+// 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤 SEND REQ TO API 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤
 // http://localhost:8000/food/getfood?foodName=<name>&cuision=<cuision>
 foodFunctions.getFood = (req,res) => {
-
     const KEY = process.env.FOOD_KEY;
      let foodName = req.query.foodName;
      let cuisine = req.query.cuisine;
@@ -25,8 +54,8 @@ foodFunctions.getFood = (req,res) => {
 
 // http://localhost:8000/food/getFoodInfo?id=665769
 // https://api.spoonacular.com/recipes/716429/information?includeNutrition=false&apiKey=a81fe7f6865f4b5c9cd7b656b37d12f1
-foodFunctions.getFoodInfo = (req,res) => {
 
+foodFunctions.getFoodInfo = (req,res) => {
     const KEY = process.env.FOOD_KEY;
      let id = req.query.id;
      let Url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${KEY}`;
@@ -39,6 +68,9 @@ foodFunctions.getFoodInfo = (req,res) => {
         res.status(400).send("Bad Request" , err)
     })
 }
+
+
+// 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤 CRUD METHODS 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤
 //get all dishes for user by email
 //http:localhost:8000/food/getFoodDishes?email=saadoundhirat93@gmail.com
 foodFunctions.getFoodDishes = (req,res) => {
@@ -99,4 +131,6 @@ foodFunctions.deleteFoodDishes = (req,res) =>{
     })
 }
 
+
 module.exports = foodFunctions;
+
