@@ -65,18 +65,18 @@ foodFunctions.getFoodInfo = (req,res) => {
         console.log(result.data)
         res.status(200).send(result.data)
     }).catch(err =>{
-        res.status(400).send("Bad Request" , err)
+        res.status(400).send('Bad Request TRY AGAIN')
     })
 }
 
 
 // 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤 CRUD METHODS 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤
-//get all dishes for user by email
-//http:localhost:8000/food/getFoodDishes?email=saadoundhirat93@gmail.com
-foodFunctions.getFoodDishes = (req,res) => {
-    let {email} = req.query;
-    console.log(foodModel);
 
+
+//http://localhost:8000/food/getFoodDishes?email=saadoundhirat93@gmail.com
+//get all dishes for user by email to render them inside the favirate dishes
+foodFunctions.getFoodDishes = (req,res) => {
+    let email = req.query.email;
     foodModel.find({email:email} , (error,userData) =>{
         console.log(userData[0].food);
         if (error){
@@ -89,12 +89,13 @@ foodFunctions.getFoodDishes = (req,res) => {
 }
 
 
-//get all dishes for user by email
-//http:localhost:8000/food/addFoodDishes?email=saadoundhirat93@gmail.com , foodObject
 
-//i will get email and food object
+//http://localhost:8000/food/addFoodDishes?email=saadoundhirat93@gmail.com ,object
+// HERE THE OBJECT HAS ALL THE DISHE INFO (TITLE , IMAGE, ID)
+//To added new dishe to the food array then send the food array with the new items
+
 foodFunctions.addFoodDishes = (req,res) => {
-    let {email} = req.query;
+    let email = req.query.email;
     let {title , image , id} =req.body;
     foodModel.find({email:email} , (error,userData) =>{
         if (error){
@@ -111,14 +112,15 @@ foodFunctions.addFoodDishes = (req,res) => {
         }
     })
 }
-
+//http://localhost:8000/food/getFoodDishes?email=saadoundhirat93@gmail.com
+// To delete item which you are selected.
 foodFunctions.deleteFoodDishes = (req,res) =>{
     let {email} = req.query;
     const id = Number(req.params.id);
     console.log('ID : ' , id);
     foodModel.find({email:email} , (error,userData) =>{
         if (error){
-            res.status(400).send("Bad Way ! ");
+            res.status(400).send('Bad Request TRY AGAIN');
         }
         let newFoodDishesFilter = userData[0].food.filter((item,idx)=>{
             if (id !== idx){

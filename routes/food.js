@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // import functions from food controller 
-const foodFunctions=require('../controllers/foodcontrole/food.js')
+const foodFunctions = require('../controllers/foodcontrole/food.js')
 
 
 
@@ -20,18 +20,20 @@ router.get('/getFoodInfo', foodFunctions.getFoodInfo);
 
 
 // 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤 CRUD METHODS ROUTES 🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤
-// send requiest to database
-// Returned data for which item was selecting (GET)
+
+//get all dishes for user by email to render them inside the favirate dishes
 router.get('/getFoodDishes' , foodFunctions.getFoodDishes);
-// To added new data of list.
-// add.
+
+
+// To added new dishe to the food array then send the food array with the new items
 router.post('/addFoodDishes' , foodFunctions.addFoodDishes);
 
 // To delete item which you are selected.
-// delete
 router.delete('/deleteFoodDishes' , foodFunctions.deleteFoodDishes);
-// router.delete('/' , fun);
-// router.put('/' , fun);
-// router.patch('/' , fun);
+
+// To update the information for specified dish 
+// router.put('/updateFoodDishes' , foodFunctions.updateFoodDishes);
+
+
 
 module.exports = router;
