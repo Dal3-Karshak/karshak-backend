@@ -32,7 +32,7 @@ router.post('/addFoodDishes' , foodFunctions.addFoodDishes);
 router.delete('/deleteFoodDishes' , foodFunctions.deleteFoodDishes);
 
 // To update the information for specified dish 
-// router.put('/updateFoodDishes' , foodFunctions.updateFoodDishes);
+router.put('/updateFoodDishes' , foodFunctions.updateFoodDishes);
 
 
 

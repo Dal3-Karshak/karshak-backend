@@ -93,6 +93,7 @@ foodFunctions.getFoodDishes = (req,res) => {
 foodFunctions.addFoodDishes = (req,res) => {
     let email = req.query.email;
     let {title , image , id , feedback , tried} =req.body;
+    console.log(tried)
     foodModel.find({email:email} , (error,userData) =>{
         if (error){
             res.status(400).send('Bad Request TRY AGAIN');
@@ -103,7 +104,7 @@ foodFunctions.addFoodDishes = (req,res) => {
                 title:title,
                 image:image,
                 feedback:feedback,
-                tride:tried,
+                tried:tried,
             });
             userData[0].save();
             res.status(200).send(userData[0].food);
@@ -129,6 +130,35 @@ foodFunctions.deleteFoodDishes = (req,res) =>{
         userData[0].save();
         res.status(200).send(userData[0]);
     })
+}
+
+// udpate card
+//http://localhost:8000/food/updateFoodDishes?email=saadoundhirat93@gmail.com&index=<num>
+
+foodFunctions.updateFoodDishes = (req, res) => {
+    console.log("wooooooorks")
+    const {email, title ,image ,id ,feedback, index ,tried} = req.body;
+    foodModel.find({email:email},(err,userData) => {
+        if (err){
+            let error ={
+                errState: true,
+                errMsg: `The User with Email : ${email} is not found enter avalid one `
+            }
+            res.status(404).send(error);
+
+        }else{
+            const obj={
+                id:id,
+                title:title,
+                image:image,
+                feedback:feedback,
+                tried:tried,
+            }
+            userData[0].food.splice(index , 1,obj);
+            userData[0].save();
+            res.status(200).send(userData[0])
+        }
+    });
 }
 
 
