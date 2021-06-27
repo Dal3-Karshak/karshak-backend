@@ -39,10 +39,7 @@ foodFunctions.getFood = (req,res) => {
     const KEY = process.env.FOOD_KEY;
      let foodName = req.query.foodName;
      let cuisine = req.query.cuisine;
-    console.log(req.query);
-    console.log()
      let Url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${KEY}&query=${foodName}&number=${12}&cuisine=${cuisine}`;
-
     axios.get(Url)
     .then(result =>{
         console.log(result.data)
@@ -52,13 +49,12 @@ foodFunctions.getFood = (req,res) => {
     })
 }
 
-// http://localhost:8000/food/getFoodInfo?id=665769
-// https://api.spoonacular.com/recipes/716429/information?includeNutrition=false&apiKey=a81fe7f6865f4b5c9cd7b656b37d12f1
 
+//https://api.spoonacular.com/recipes/654857/ingredientWidget.json?apiKey=a81fe7f6865f4b5c9cd7b656b37d12f1
 foodFunctions.getFoodInfo = (req,res) => {
     const KEY = process.env.FOOD_KEY;
      let id = req.query.id;
-     let Url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${KEY}`;
+     let Url = `https://api.spoonacular.com/recipes/${id}/ingredientWidget.json?apiKey=${KEY}`;
 
     axios.get(Url)
     .then(result =>{
@@ -96,7 +92,7 @@ foodFunctions.getFoodDishes = (req,res) => {
 
 foodFunctions.addFoodDishes = (req,res) => {
     let email = req.query.email;
-    let {title , image , id} =req.body;
+    let {title , image , id , feedback , tried} =req.body;
     foodModel.find({email:email} , (error,userData) =>{
         if (error){
             res.status(400).send('Bad Request TRY AGAIN');
@@ -106,30 +102,32 @@ foodFunctions.addFoodDishes = (req,res) => {
                 id:id,
                 title:title,
                 image:image,
+                feedback:feedback,
+                tride:tried,
             });
             userData[0].save();
             res.status(200).send(userData[0].food);
         }
     })
 }
-//http://localhost:8000/food/getFoodDishes?email=saadoundhirat93@gmail.com
+//http://localhost:8000/food/deleteFoodDishes?email=saadoundhirat93@gmail.com&index=<num>
 // To delete item which you are selected.
 foodFunctions.deleteFoodDishes = (req,res) =>{
-    let {email} = req.query;
-    const id = Number(req.params.id);
-    console.log('ID : ' , id);
-    foodModel.find({email:email} , (error,userData) =>{
+    let email = req.query.email;
+    const index = Number(req.query.index);
+      foodModel.find({email:email} , (error,userData) =>{
         if (error){
             res.status(400).send('Bad Request TRY AGAIN');
         }
-        let newFoodDishesFilter = userData[0].food.filter((item,idx)=>{
-            if (id !== idx){
+        let newFoodDishesFilter =  userData[0].food.filter((item,idx)=>{
+            if (index !== idx){
+                console.log(index , idx)
                 return item;
             }
         });
         userData[0].food = newFoodDishesFilter;
         userData[0].save();
-        res.status(200).send(userData[0].food);
+        res.status(200).send(userData[0]);
     })
 }
 

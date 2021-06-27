@@ -9,6 +9,8 @@ const foodSchema = new mongoose.Schema({
     id: Number,
     title: String,
     image: String,
+    feedback:String,
+    tried:Boolean,
 });
 
 const user = new mongoose.Schema({
