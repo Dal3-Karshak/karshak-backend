@@ -11,7 +11,6 @@ const foodRoutes = require('./routes/food.js')
 // config
 const app = express();
 const PORT = process.env.PORT;
-console.log(process.env.PORT)
 
 // middle wares 
 app.use(cors());
@@ -34,35 +33,43 @@ app.all("*", (req, res) =>res.status(400).send("You've tried reaching a route th
 // 🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 CODE 🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆
 // seed data 
 function seed() {
-  const saadoun = new foodModel ({
+  const ali = new foodModel ({
         email: 'saadoundhirat93@gmail.com',
         food:[
             {   
               id: 12345,
               title: "mansaf",
               image: "https://books.google.jo/books/content?id=Sm5AKLXKxHgC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71M3zrn0BNLYYWOYJ1rwmkKcezZC6W7ewco9UlgC9QwEG6wJ0zfvBwEnJiuvcc3dHL73x1tdbXJ7XyVCgnGvNwFVpvClo66YZ6CXm-wHoyuTYx7IO2EzO_a3B-55jm-3VW76G7m",
+              feedback:"its amazing",
+              tried:true,
             },
 
             {
               id: 12345,
               title: "mansaf",
               image: "https://books.google.jo/books/content?id=Sm5AKLXKxHgC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71M3zrn0BNLYYWOYJ1rwmkKcezZC6W7ewco9UlgC9QwEG6wJ0zfvBwEnJiuvcc3dHL73x1tdbXJ7XyVCgnGvNwFVpvClo66YZ6CXm-wHoyuTYx7IO2EzO_a3B-55jm-3VW76G7m",
+              feedback:"its amazing",
+              tried:true,
             },
 
             {
               id: 12345,
               title: "mansaf",
               image: "https://books.google.jo/books/content?id=Sm5AKLXKxHgC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71M3zrn0BNLYYWOYJ1rwmkKcezZC6W7ewco9UlgC9QwEG6wJ0zfvBwEnJiuvcc3dHL73x1tdbXJ7XyVCgnGvNwFVpvClo66YZ6CXm-wHoyuTYx7IO2EzO_a3B-55jm-3VW76G7m",
+              feedback:"its amazing",
+              tried:true,
             },
             {
               id: 12345,
               title: "mansaf",
               image: "https://books.google.jo/books/content?id=Sm5AKLXKxHgC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE71M3zrn0BNLYYWOYJ1rwmkKcezZC6W7ewco9UlgC9QwEG6wJ0zfvBwEnJiuvcc3dHL73x1tdbXJ7XyVCgnGvNwFVpvClo66YZ6CXm-wHoyuTYx7IO2EzO_a3B-55jm-3VW76G7m",
+              feedback:"",
+              tried:false,
             }
         ]
 
   });
-   saadoun.save();
+   ali.save();
 }
 
 // seed();
